@@ -17,6 +17,9 @@
 
 ; R.I.S.T. Parrot version
 
+; For VTR version uncomment the next Line
+;#define USE_VTR
+
 ;defs
 #include "zx81defs.asm"
 ;ZX81 char codes/how to survive without ASCII
@@ -27,7 +30,11 @@
 ENDBITPOS  EQU 7
 ENDBIT     EQU (1<<ENDBITPOS)
 ENDMASK    EQU (~ENDBIT)
-SOUND      EQU 3    
+#ifdef USE_VTR
+SOUND      EQU $3F
+#else
+SOUND      EQU $03
+#endif
 
 ;Line 0
 ;the standard REM statement that will contain our 'hex' code
@@ -37,7 +44,12 @@ Line0Text:      DEFB $EA                        ; REM
 
 
 INI
+#ifdef USE_VTR
+       LD A,$80
+       OUT (SOUND),A
+#else
        CALL WAIT
+#endif
        CALL RECHE
        CALL PLAY
        RET
