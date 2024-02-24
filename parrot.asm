@@ -33,7 +33,7 @@ ENDMASK    EQU (~ENDBIT)
 #ifdef USE_VTR
 SOUND      EQU $3F
 #else
-SOUND      EQU $03
+SOUND      EQU $03 ; $4F would be better to reduce interactions with other hardware
 #endif
 
 ;Line 0
